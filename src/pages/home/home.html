@@ -8,11 +8,43 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <!--<ion-button *ngIf="!isStop" (click)="stopWorkout()">Stop workout!</ion-button>-->
+  <button ion-button *ngIf="!isStop" (click)=" presentConfirm()">Stop workout!</button>
+  <!--<ion-button *ngIf="isStop" (click)='refreshHomePage()'>Home</ion-button>-->
+  <!--<button ion-button (click)="presentConfirm()">Alert</button>-->
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <div>
+    <ngx-gauge *ngIf="!isStop" [type]="gaugeType"
+               [value]="gaugeValue"
+               [label]="gaugeLabel"
+               [size]="500"
+               [min]="0"
+               [max]="500"
+               [duration]="10"
+               [thick]="50"
+               [append]="gaugeAppendText"
+               [thresholds]="thresholdConfig">>
+    </ngx-gauge>
+  </div>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <!--<li [hidden]="isStop"  *ngFor="let cust of pulsesPerSecond">-->
+  <!--{{cust.rpm}} ; {{cust.timestamp * 1000 | date: 'h:mm:ss'}}-->
+  <!--</li>-->
+
+  <div>
+    <p *ngIf="isStop">
+      {{totalMinutes}}
+    </p>
+  </div>
+
+  <div style="display: block;  height: 430px; width: 430px;">
+    <canvas *ngIf='isStop' baseChart
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType">
+    </canvas>
+  </div>
 </ion-content>

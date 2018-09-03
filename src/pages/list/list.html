@@ -10,11 +10,8 @@
 <ion-content>
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
+      <ion-icon name="bicycle"></ion-icon>
+      {{item.title | date:'dd/MMM/yyyy hh:mm:ss'}} Max: {{item.note}}, Average: {{item.icon}}
     </button>
   </ion-list>
   <div *ngIf="selectedItem" padding>
