@@ -1,0 +1,7 @@
+{
+  "name": "rpmfrontend",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
