@@ -5,6 +5,7 @@ import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
 import {ListPage} from '../pages/list/list';
+import {DetailPage} from '../pages/detail/detail';
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
@@ -13,25 +14,29 @@ import {NgxGaugeModule} from 'ngx-gauge';
 import {ChartsModule} from 'ng2-charts';
 import {HttpClientModule} from '@angular/common/http';
 import {RpmmeterService} from '../pages/shared/rpmmeter.service';
+import {LoadingModule} from 'ngx-loading';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    DetailPage
   ],
   imports: [
     BrowserModule,
     NgxGaugeModule,
     HttpClientModule,
     ChartsModule,
+    LoadingModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    DetailPage
   ],
   providers: [
     StatusBar,

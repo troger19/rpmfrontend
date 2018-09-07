@@ -8,10 +8,8 @@
 </ion-header>
 
 <ion-content padding>
-  <!--<ion-button *ngIf="!isStop" (click)="stopWorkout()">Stop workout!</ion-button>-->
-  <button ion-button *ngIf="!isStop" (click)=" presentConfirm()">Stop workout!</button>
-  <!--<ion-button *ngIf="isStop" (click)='refreshHomePage()'>Home</ion-button>-->
-  <!--<button ion-button (click)="presentConfirm()">Alert</button>-->
+  <button ion-button *ngIf="!isStop" (click)="presentConfirm()">Stop workout!</button>
+  <button ion-button *ngIf="isStop" (click)="refreshHomePage()">Home</button>
 
   <div>
     <ngx-gauge *ngIf="!isStop" [type]="gaugeType"

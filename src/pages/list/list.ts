@@ -3,20 +3,22 @@ import {NavController, NavParams} from 'ionic-angular';
 import {RPMData} from '../shared/rpmdata';
 import {RpmmeterService} from '../shared/rpmmeter.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {DetailPage} from '../detail/detail';
 
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
 })
 export class ListPage implements OnInit {
+  public loading = false;
   selectedItem: any;
   icons: string[];
-  items: Array<{ title: Date; note: number; icon: number }> = [];
+  items: Array<{ date: Date; duration: number; average: number, rpm: any[] }> = [];
+  // items: Array<RPMData> = [];
   rpmData: Array<RPMData>;
   date: Date;
   rpm: any[];
   duration: number;
-  max: number;
   average: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private rpmService: RpmmeterService) {
@@ -34,25 +36,25 @@ export class ListPage implements OnInit {
 
   ngOnInit() {
     this.getTrainings();
-    // this.hoco();
+    // this.parseIntoArray();
   }
 
 
   itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
+    this.navCtrl.push(DetailPage, {
       item: item
     });
   }
 
   public getTrainings() {
+    this.loading = true;
     this.rpmService.getTrainings().subscribe(
       data => {
-        // console.log('data ' + data);
-        // this.rpmData.push(data);
-        this.hoco(data);
+        this.loading = false;
+        this.parseIntoArray(data);
       },
       (err: HttpErrorResponse) => {
+        this.loading = false;
         if (err.error instanceof Error) {
           console.log('Client-side error occured.');
         } else {
@@ -62,14 +64,16 @@ export class ListPage implements OnInit {
     );
   }
 
-  public hoco(rpmData: RPMData[]) {
+  public parseIntoArray(rpmData: RPMData[]) {
     for (let i = 0; i < rpmData.length; i++) {
       this.items.push({
-        title: rpmData[i].date,
-        note: rpmData[i].max,
-        icon: rpmData[i].average
+        date: rpmData[i].date,
+        duration: rpmData[i].duration,
+        average: rpmData[i].average,
+        rpm: rpmData[i].rpm
       });
     }
+    this.items.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
 

@@ -21,12 +21,10 @@ export class RpmmeterService {
       date: new Date(),
       rpm: rpmData,
       duration: rpmData.length,
-      max: Math.max(...rpmData),
       average: avg
     };
     return this.http.post('https://rpmbackend.herokuapp.com/create', dataToSave, httpOptions);
   }
-
   getTrainings() {
     return this.http.get<RPMData[]>('https://rpmbackend.herokuapp.com/all');
   }

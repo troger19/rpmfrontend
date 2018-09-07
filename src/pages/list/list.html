@@ -8,13 +8,14 @@
 </ion-header>
 
 <ion-content>
+
+  <div class="my-container">
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+  </div>
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
       <ion-icon name="bicycle"></ion-icon>
-      {{item.title | date:'dd/MMM/yyyy hh:mm:ss'}} Max: {{item.note}}, Average: {{item.icon}}
+      {{item.date | date:'dd/MMM/yyyy hh:mm:ss'}} Duration: {{item.duration}}, Average: {{item.average}}
     </button>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
 </ion-content>

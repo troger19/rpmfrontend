@@ -58,8 +58,8 @@ export class HomePage implements OnInit {
       console.log('Starting listening to pulsesPerSecond...');
       // After each revolution on the bike, a PULSE_EVENT is emitted containing some useful data about it.
       rpmMeter.on(PULSE_EVENT, (pulseData) => {
-        console.log(pulseData);
-        console.log('rpm' + pulseData.rpm);
+        // console.log(pulseData);
+        console.log('rpm : ' + pulseData.rpm);
         const currentTimestamp = pulseData.timestamp.toString();
         // display only results every 1 second
         if (currentTimestamp.substring(currentTimestamp.length - 7, currentTimestamp.length - 4)
@@ -121,20 +121,18 @@ export class HomePage implements OnInit {
 
   presentConfirm() {
     let alert = this.alertCtrl.create({
-      title: 'Confirm purchase',
-      message: 'Do you want to buy this book?',
+      title: 'End of Workout',
+      message: 'End workout and save?',
       buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
           }
         },
         {
           text: 'OK',
           handler: () => {
-            console.log('Buy clicked');
             this.stopWorkout();
           }
         }
