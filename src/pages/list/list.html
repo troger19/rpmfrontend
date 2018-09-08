@@ -15,7 +15,8 @@
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
       <ion-icon name="bicycle"></ion-icon>
-      {{item.date | date:'dd/MMM/yyyy hh:mm:ss'}} Duration: {{item.duration}}, Average: {{item.average}}
+      {{item.date | date:'dd/MMM/yyyy hh:mm:ss'}} Duration: {{item.duration}}, Average: {{item.average}}, Name:
+      {{item.personName}}
     </button>
   </ion-list>
 </ion-content>

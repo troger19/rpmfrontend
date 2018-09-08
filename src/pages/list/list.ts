@@ -13,7 +13,7 @@ export class ListPage implements OnInit {
   public loading = false;
   selectedItem: any;
   icons: string[];
-  items: Array<{ date: Date; duration: number; average: number, rpm: any[] }> = [];
+  items: Array<{ date: Date; duration: number; average: number, rpm: any[], personName: string }> = [];
   // items: Array<RPMData> = [];
   rpmData: Array<RPMData>;
   date: Date;
@@ -70,7 +70,8 @@ export class ListPage implements OnInit {
         date: rpmData[i].date,
         duration: rpmData[i].duration,
         average: rpmData[i].average,
-        rpm: rpmData[i].rpm
+        rpm: rpmData[i].rpm,
+        personName: rpmData[i].personName
       });
     }
     this.items.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

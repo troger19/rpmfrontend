@@ -21,7 +21,8 @@ export class RpmmeterService {
       date: new Date(),
       rpm: rpmData,
       duration: rpmData.length,
-      average: avg
+      average: avg,
+      personName: 'Jano'
     };
     return this.http.post('https://rpmbackend.herokuapp.com/create', dataToSave, httpOptions);
   }

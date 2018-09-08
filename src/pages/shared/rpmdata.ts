@@ -3,4 +3,5 @@ export interface RPMData {
   rpm: any[];
   duration: number;
   average: number;
+  personName: string
 }
