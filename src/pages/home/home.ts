@@ -3,15 +3,24 @@ import {AlertController, NavController} from 'ionic-angular';
 import {RpmmeterService} from '../shared/rpmmeter.service';
 import {Observable} from 'rxjs/Observable';
 import RpmMeter, {PULSE_EVENT} from 'spin-bike-rpm-meter';
+import {SimpleTimer} from 'ng2-simple-timer';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Person} from '../shared/person';
+
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
+  counter: number = 0;
+  timerId: string;
+  // selectedOption: string;
+
   pulsesPerSecond: Array<any>;
   chartData: Array<number>;
   isStop = false;
+  isStart = false;
   previousTimestamp = '';
   totalMinutes = '';
   gaugeType = 'semi';
@@ -44,13 +53,53 @@ export class HomePage implements OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
 
-  constructor(private rpmService: RpmmeterService, public navCtrl: NavController, public alertCtrl: AlertController) {
+  personForm: FormGroup;
+  public persons: Person[];
+
+  constructor(private rpmService: RpmmeterService, public navCtrl: NavController, public alertCtrl: AlertController,
+              private st: SimpleTimer, private fb: FormBuilder) {
     this.pulsesPerSecond = [];
     this.chartData = [];
     this.lineChartLabels = [];
+
+
   }
 
   ngOnInit() {
+    this.st.newTimer('1sec', 1);
+    this.rpmService.getPersons().subscribe(
+      data => {
+        console.log('Persooooon ', data);
+        this.persons = data as Person[];
+      },
+      error => {
+        console.error('Daco je zle ', error);
+        return Observable.create(error);
+      }
+    );
+
+    this.personForm = this.fb.group({
+      personControl: [""]
+    });
+
+  }
+
+
+  callback() {
+    console.log('hoooohoho ' + this.counter)
+    this.counter++;
+  }
+
+  onChange(SelectedValue) {
+    console.info("Selected:", SelectedValue.tar);
+  }
+
+
+  startWorkout() {
+    // console.log(this.selectedOption)
+    this.timerId = this.st.subscribe('1sec', () => this.callback());
+
+    this.isStart = true;
     const rpmMeter = new RpmMeter();
     // Start listening to the "pulsesPerSecond". Asks for permission to the microphone. Run start() before
 // starting to cycle on the spin bike.
@@ -91,6 +140,8 @@ export class HomePage implements OnInit {
 
   stopWorkout() {
     this.isStop = true;
+    this.isStart = false;
+    this.st.unsubscribe(this.timerId);
     this.calculateResult(this.pulsesPerSecond.length);
     this.lineChartData[0].data = this.chartData;
     console.log(this.chartData);
@@ -119,7 +170,7 @@ export class HomePage implements OnInit {
     window.location.reload();
   }
 
-  presentConfirm() {
+  confirmStop() {
     let alert = this.alertCtrl.create({
       title: 'End of Workout',
       message: 'End workout and save?',
@@ -140,5 +191,6 @@ export class HomePage implements OnInit {
     });
     alert.present();
   }
+
 
 }

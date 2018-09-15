@@ -15,6 +15,8 @@ import {ChartsModule} from 'ng2-charts';
 import {HttpClientModule} from '@angular/common/http';
 import {RpmmeterService} from '../pages/shared/rpmmeter.service';
 import {LoadingModule} from 'ngx-loading';
+import {SimpleTimer} from 'ng2-simple-timer';
+
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import {LoadingModule} from 'ngx-loading';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    RpmmeterService
+    RpmmeterService,
+    SimpleTimer
   ]
 })
 export class AppModule {}

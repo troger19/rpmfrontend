@@ -8,8 +8,40 @@
 </ion-header>
 
 <ion-content padding>
-  <button ion-button *ngIf="!isStop" (click)="presentConfirm()">Stop workout!</button>
-  <button ion-button *ngIf="isStop" (click)="refreshHomePage()">Home</button>
+  <div class="row">
+    <div class="column">
+      <button ion-button *ngIf="!isStart && !isStop" (click)="startWorkout()">Start workout</button>
+      <button ion-button *ngIf="isStart" (click)="confirmStop()">Stop workout!</button>
+      <button ion-button *ngIf="isStop" (click)="refreshHomePage()">Home</button>
+    </div>
+    <div class="column form-group">
+      <form [formGroup]="personForm">
+        <select [(ngModel)]="selectedPerson" (change)="onChange(selectedPerson)" class="form-control form-control-lg"
+                formControlName="personControl">
+          <option [value]="country" *ngFor="let person of persons"> {{person.name}}</option>
+        </select>
+      </form>
+    </div>
+  </div>
+
+
+  <table class="table">
+    <thead>
+    <tr class="bg-info">
+      <th scope="col">#</th>
+      <th scope="col">Overall Time</th>
+      <th scope="col">Working Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td class="text-info display-1">{{counter}}</td>
+      <td class="text-danger display-1">{{pulsesPerSecond.length}}</td>
+    </tr>
+    </tbody>
+  </table>
+
 
   <div>
     <ngx-gauge *ngIf="!isStop" [type]="gaugeType"
@@ -29,11 +61,11 @@
   <!--{{cust.rpm}} ; {{cust.timestamp * 1000 | date: 'h:mm:ss'}}-->
   <!--</li>-->
 
-  <div>
-    <p *ngIf="isStop">
-      {{totalMinutes}}
-    </p>
-  </div>
+  <!--<div>-->
+  <!--<p *ngIf="isStop">-->
+  <!--{{totalMinutes}}-->
+  <!--</p>-->
+  <!--</div>-->
 
   <div style="display: block;  height: 430px; width: 430px;">
     <canvas *ngIf='isStop' baseChart

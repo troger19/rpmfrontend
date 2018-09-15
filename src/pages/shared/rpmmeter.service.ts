@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {RPMData} from './rpmdata';
+import {Person} from './person';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -28,5 +29,9 @@ export class RpmmeterService {
   }
   getTrainings() {
     return this.http.get<RPMData[]>('https://rpmbackend.herokuapp.com/all');
+  }
+
+  getPersons() {
+    return this.http.get<Person[]>('https://rpmbackend.herokuapp.com/allPerson');
   }
 }
